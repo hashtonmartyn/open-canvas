@@ -97,6 +97,10 @@ export function CanvasComponent() {
     setIsEditing(true);
   };
 
+  console.log(chatStarted, chatCollapsed)
+  console.log(graphData.artifact)
+  console.log(graphData.artifact === undefined ? 100 : 25)
+
   return (
     <ResizablePanelGroup direction="horizontal" className="h-screen">
       {!chatStarted && (
@@ -143,10 +147,10 @@ export function CanvasComponent() {
       )}
       {!chatCollapsed && chatStarted && (
         <ResizablePanel
-          defaultSize={25}
+          defaultSize={graphData.artifact === undefined ? 100 : 25}
           minSize={15}
-          maxSize={50}
-          className="transition-all duration-700 h-screen mr-auto bg-gray-50/70 shadow-inner-right"
+          maxSize={graphData.artifact === undefined ? 100 : 25}
+          className={`transition-all duration-700 h-screen ${graphData.artifact === undefined ? "mx-auto max-w-4xl" : "mr-auto bg-gray-50/70 shadow-inner-right"} `}
           id="chat-panel-main"
           order={1}
         >
@@ -204,7 +208,7 @@ export function CanvasComponent() {
             minSize={50}
             id="canvas-panel"
             order={2}
-            className="flex flex-row w-full"
+            className={`flex flex-row w-full ${!graphData.artifact ? 'hidden' : ''}`}
           >
             <div className="w-full ml-auto">
               <ArtifactRenderer
