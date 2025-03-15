@@ -97,10 +97,6 @@ export function CanvasComponent() {
     setIsEditing(true);
   };
 
-  console.log(chatStarted, chatCollapsed)
-  console.log(graphData.artifact)
-  console.log(graphData.artifact === undefined ? 100 : 25)
-
   return (
     <ResizablePanelGroup direction="horizontal" className="h-screen">
       {!chatStarted && (
@@ -201,14 +197,14 @@ export function CanvasComponent() {
 
       {chatStarted && (
         <>
-          <ResizableHandle />
+          <ResizableHandle className="transition-all duration-700" />
           <ResizablePanel
             defaultSize={chatCollapsed ? 100 : 75}
             maxSize={85}
             minSize={50}
             id="canvas-panel"
             order={2}
-            className={`flex flex-row w-full ${!graphData.artifact ? 'hidden' : ''}`}
+            className={`flex flex-row w-full transition-all duration-700 ${!graphData.artifact ? 'hidden' : ''}`}
           >
             <div className="w-full ml-auto">
               <ArtifactRenderer
