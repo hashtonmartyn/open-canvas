@@ -13,6 +13,8 @@ import { GraphInput } from "@opencanvas/shared/types";
 export interface LengthOptionsProps {
   streamMessage: (params: GraphInput) => Promise<void>;
   handleClose: () => void;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 const lengthOptions = [
@@ -36,7 +38,7 @@ export function LengthOptions(props: LengthOptionsProps) {
   };
 
   return (
-    <div className="h-[200px] flex items-center justify-center px-4">
+    <div className={cn("h-[200px] flex items-center justify-center px-4", props.className)} style={props.style}>
       <TooltipProvider>
         <Tooltip open={open}>
           <TooltipTrigger asChild>

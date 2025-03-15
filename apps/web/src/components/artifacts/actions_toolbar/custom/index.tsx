@@ -23,6 +23,7 @@ import { useToast } from "@/hooks/use-toast";
 import { TighterText } from "@/components/ui/header";
 import { GraphInput } from "@opencanvas/shared/types";
 import { User } from "@supabase/supabase-js";
+import {IconButton} from "@/components/ui/assistant-ui/icon-button";
 
 export interface CustomQuickActionsProps {
   isTextSelected: boolean;
@@ -89,7 +90,8 @@ export function CustomQuickActions(props: CustomQuickActionsProps) {
     isLoadingQuickActions,
   } = useStore();
   const { toast } = useToast();
-  const [open, setOpen] = useState(false);
+  const [mouseOverButton, setMouseOverButton] = useState(false)
+  const [mouseOverMenu, setMouseOverMenu] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingId, setIsEditingId] = useState<string>();
@@ -121,7 +123,6 @@ export function CustomQuickActions(props: CustomQuickActionsProps) {
   };
 
   const handleQuickActionClick = async (id: string): Promise<void> => {
-    setOpen(false);
     setIsEditing(false);
     setIsEditingId(undefined);
     await streamMessage({
@@ -169,39 +170,37 @@ export function CustomQuickActions(props: CustomQuickActionsProps) {
 
   return (
     <DropdownMenu
-      open={open}
-      onOpenChange={(o) => {
-        if (props.isTextSelected) return;
-        setOpen(o);
-      }}
+      open={(mouseOverButton || mouseOverMenu) && !props.isTextSelected}
     >
-      <DropdownMenuTrigger className="fixed bottom-4 right-20" asChild>
-        <TooltipIconButton
-          tooltip={
-            props.isTextSelected
-              ? "Quick actions disabled while text is selected"
-              : "Custom quick actions"
-          }
-          variant="outline"
-          className={cn(
-            "transition-colors w-[48px] h-[48px] p-0 rounded-xl",
-            props.isTextSelected
-              ? "cursor-default opacity-50 text-gray-400 hover:bg-background"
-              : "cursor-pointer"
-          )}
-          delayDuration={400}
-        >
-          <WandSparkles
+      <div 
+        onMouseOver={() => setMouseOverButton(true)}
+        onMouseOut={() => setMouseOverButton(false)}
+        className="fixed bottom-4 right-20"
+      >
+        <DropdownMenuTrigger/>
+          <IconButton
+            variant="outline"
             className={cn(
-              "w-[26px] h-[26px]",
+              "transition-colors w-[48px] h-[48px] p-0 rounded-xl",
               props.isTextSelected
-                ? "text-gray-400"
-                : "hover:text-gray-900 transition-colors"
+                ? "cursor-default opacity-50 text-gray-400 hover:bg-background"
+                : "cursor-pointer"
             )}
-          />
-        </TooltipIconButton>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-h-[600px] max-w-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+          >
+            <WandSparkles
+              className={cn(
+                "w-[26px] h-[26px]",
+                props.isTextSelected
+                  ? "text-gray-400"
+                  : "hover:text-gray-900 transition-colors"
+              )}
+            />
+          </IconButton>
+      </div>
+      <DropdownMenuContent 
+        onMouseOver={() => setMouseOverMenu(true)}
+        onMouseOut={() => setMouseOverMenu(false)}
+        className="max-h-[600px] max-w-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
         <DropdownMenuLabel>
           <TighterText>Custom Quick Actions</TighterText>
         </DropdownMenuLabel>

@@ -8,10 +8,13 @@ import {
 import { TooltipIconButton } from "@/components/ui/assistant-ui/tooltip-icon-button";
 import { GraphInput } from "@opencanvas/shared/types";
 import { LanguageOptions } from "@opencanvas/shared/types";
+import {cn} from "@/lib/utils";
 
 export interface TranslateOptionsProps {
   streamMessage: (params: GraphInput) => Promise<void>;
   handleClose: () => void;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 export function TranslateOptions(props: TranslateOptionsProps) {
@@ -25,7 +28,7 @@ export function TranslateOptions(props: TranslateOptionsProps) {
   };
 
   return (
-    <div className="flex flex-col gap-3 items-center w-full">
+    <div className={cn("flex flex-col gap-3 items-center w-full", props.className)} style={props.style}>
       <TooltipIconButton
         tooltip="English"
         variant="ghost"

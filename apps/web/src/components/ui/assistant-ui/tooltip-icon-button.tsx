@@ -8,10 +8,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Button, ButtonProps } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { IconButton, IconButtonProps } from "./icon-button";
 
-export type TooltipIconButtonProps = ButtonProps & {
+export type TooltipIconButtonProps = IconButtonProps & {
   tooltip: string | React.ReactNode;
   side?: "top" | "bottom" | "left" | "right";
   /**
@@ -32,16 +31,14 @@ export const TooltipIconButton = forwardRef<
       <TooltipProvider>
         <Tooltip delayDuration={delayDuration ?? 700}>
           <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
+            <IconButton
               {...rest}
-              className={cn("size-6 p-1", className)}
+              className={className}
               ref={ref}
             >
               {children}
               <span className="sr-only">{tooltip}</span>
-            </Button>
+            </IconButton>
           </TooltipTrigger>
           <TooltipContent side={side}>{tooltip}</TooltipContent>
         </Tooltip>

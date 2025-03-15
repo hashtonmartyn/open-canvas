@@ -47,13 +47,24 @@ const config: Config = {
   				to: {
   					height: '0'
   				}
+  			},
+  			'toolbar-expand-up': {
+  				'0%': {
+  					opacity: '0',
+  					transform: 'translateY(20px) scale(0.95)'
+  				},
+  				'100%': {
+  					opacity: '1',
+  					transform: 'translateY(0) scale(1)'
+  				}
   			}
   		},
   		animation: {
   			'gradient-xy-enhanced': 'gradient-xy-enhanced 15s ease infinite',
   			'gradient-x': 'gradient-x 3s ease-in-out infinite',
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+  			'toolbar-expand-up': 'toolbar-expand-up 0.3s ease-out'
   		},
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

@@ -7,6 +7,8 @@ export interface PortToLanguageOptionsProps {
   streamMessage: (params: GraphInput) => Promise<void>;
   handleClose: () => void;
   language: ProgrammingLanguageOptions;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 const prettifyLanguage = (language: ProgrammingLanguageOptions) => {
@@ -53,5 +55,9 @@ export function PortToLanguageOptions(props: PortToLanguageOptionsProps) {
     });
   };
 
-  return <ProgrammingLanguageList handleSubmit={handleSubmit} />;
+  return (
+    <div className={props.className} style={props.style}>
+      <ProgrammingLanguageList handleSubmit={handleSubmit} />
+    </div>
+  );
 }
