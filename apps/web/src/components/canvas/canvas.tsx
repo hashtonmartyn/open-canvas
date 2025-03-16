@@ -37,6 +37,7 @@ export function CanvasComponent() {
   const [isEditing, setIsEditing] = useState(false);
   const [webSearchResultsOpen, setWebSearchResultsOpen] = useState(false);
   const [chatCollapsed, setChatCollapsed] = useState(false);
+  const [resizing, setResizing] = useState(false)
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -141,12 +142,19 @@ export function CanvasComponent() {
           />
         </NoSSRWrapper>
       )}
-      {!chatCollapsed && chatStarted && (
+      {chatStarted && (
         <ResizablePanel
-          defaultSize={graphData.artifact === undefined ? 100 : 25}
-          minSize={15}
-          maxSize={graphData.artifact === undefined ? 100 : 25}
-          className={`transition-all duration-700 h-screen ${graphData.artifact === undefined ? "mx-auto max-w-4xl" : "mr-auto bg-gray-50/70 shadow-inner-right"} `}
+          key={
+            graphData.artifact === undefined ? "no-artifact" : "has-artifact"
+          }
+          defaultSize={
+            chatCollapsed ? 0 : graphData.artifact === undefined ? 100 : 25
+          }
+          minSize={chatCollapsed ? 0 : 25}
+          maxSize={
+            chatCollapsed ? 0 : graphData.artifact === undefined ? 100 : 50
+          }
+          className={`${resizing ? "transition-colors" : "transition-all"} duration-700 ease-in-out h-screen ${chatCollapsed ? "transform -translate-x-full opacity-0" : ""} ${graphData.artifact === undefined ? "mx-auto max-w-4xl" : "mr-auto bg-gray-50/70 shadow-inner-right"} `}
           id="chat-panel-main"
           order={1}
         >
@@ -197,14 +205,24 @@ export function CanvasComponent() {
 
       {chatStarted && (
         <>
-          <ResizableHandle className="transition-all duration-700" />
+          <ResizableHandle
+            className={
+              `${resizing ? "transition-colors" : "transition-all"} transition-colors duration-700 ease-in-out`
+            }
+            onDragging={(isDragging) => {
+              setResizing(isDragging);
+            }}
+          />
           <ResizablePanel
+            key={
+              graphData.artifact === undefined ? "no-artifact" : "has-artifact"
+            }
             defaultSize={chatCollapsed ? 100 : 75}
-            maxSize={85}
+            maxSize={100}
             minSize={50}
             id="canvas-panel"
             order={2}
-            className={`flex flex-row w-full transition-all duration-700 ${!graphData.artifact ? 'hidden' : ''}`}
+            className={`flex flex-row w-full ${resizing ? "transition-colors" : "transition-all"} duration-700 ease-in-out ${!graphData.artifact ? "hidden" : ""}`}
           >
             <div className="w-full ml-auto">
               <ArtifactRenderer

@@ -97,16 +97,18 @@ export const Thread: FC<ThreadProps> = (props: ThreadProps) => {
           <ThreadHistory
             switchSelectedThreadCallback={switchSelectedThreadCallback}
           />
-          <TighterText className="text-xl">Open Canvas</TighterText>
+
           {!hasChatStarted && (
-            <ModelSelector
-              modelName={modelName}
-              setModelName={setModelName}
-              modelConfig={modelConfig}
-              setModelConfig={setModelConfig}
-              modelConfigs={modelConfigs}
-            />
+            <TighterText className="text-xl">Open Canvas</TighterText>
           )}
+
+          <ModelSelector
+            modelName={modelName}
+            setModelName={setModelName}
+            modelConfig={modelConfig}
+            setModelConfig={setModelConfig}
+            modelConfigs={modelConfigs}
+          />
         </div>
         {hasChatStarted ? (
           <div className="flex flex-row flex-1 gap-2 items-center justify-end">
@@ -134,6 +136,7 @@ export const Thread: FC<ThreadProps> = (props: ThreadProps) => {
             <ReflectionsDialog selectedAssistant={selectedAssistant} />
           </div>
         )}
+
       </div>
       <ThreadPrimitive.Viewport className="flex-1 overflow-y-auto scroll-smooth bg-inherit px-4 pt-8">
         {!hasChatStarted && (
@@ -168,13 +171,6 @@ export const Thread: FC<ThreadProps> = (props: ThreadProps) => {
         <div className="w-full max-w-2xl">
           {hasChatStarted && (
             <div className="flex flex-col space-y-2">
-              <ModelSelector
-                modelName={modelName}
-                setModelName={setModelName}
-                modelConfig={modelConfig}
-                setModelConfig={setModelConfig}
-                modelConfigs={modelConfigs}
-              />
               <Composer
                 chatStarted={true}
                 userId={props.userId}

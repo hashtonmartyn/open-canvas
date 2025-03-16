@@ -241,7 +241,7 @@ export default function ModelSelector({
           <CaretSortIcon className="size-4 opacity-50 ml-auto" />
         </div>
       </PopoverTrigger>
-      <PopoverContent className="min-w-[180px] w-[280px] p-0 shadow-md rounded-md">
+      <PopoverContent className="min-w-[180px] w-[280px] p-0 shadow-md rounded-md z-50">
         <Command>
           <CommandList>
             {openaiModelGroup.length > 0 && (
